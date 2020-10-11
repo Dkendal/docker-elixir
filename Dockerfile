@@ -1,4 +1,6 @@
-FROM erlang:23-alpine as elixir
+FROM erlang:23-alpine
+
+LABEL org.opencontainers.image.source https://github.com/Dkendal/docker-elixir
 
 # elixir expects utf8.
 ENV ELIXIR_VERSION="v1.11.0" \

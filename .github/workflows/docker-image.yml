@@ -1,0 +1,24 @@
+name: Docker Image CD
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  DOCKER_BUILDKIT: 1
+  IMAGE: ghcr.io/dkendal/docker-elixir:1.11.0-alpine
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Log in to Docker registry
+      run: echo "${{ secrets.PA_TOKEN }}" | docker login ghcr.io --username Dkendal --password-stdin
+    - name: Build the Docker image
+      run: docker build . --tag "$IMAGE"
+    - name: Publish Docker image
+      run: docker push "$IMAGE"
